@@ -1348,9 +1348,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2028128145}
   - component: {fileID: 2028128146}
-  - component: {fileID: 2028128149}
   - component: {fileID: 2028128148}
   - component: {fileID: 2028128147}
+  - component: {fileID: 2028128149}
   m_Layer: 0
   m_Name: Player_Body
   m_TagString: Untagged
@@ -1441,7 +1441,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e9264d29efcb2a740967785467b9c86e, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1484,7 +1484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a44d2851702110449d79e3c3759d9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
   jumpForce: 8
   groundCheck: {fileID: 1944598332}
   checkRadius: 0.2
