@@ -15,13 +15,28 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     private int extraJumps; 
     public int extraJumpsValue;
+    private bool _isJumping;
 
     // player components
     private Rigidbody2D rig;
-    private Vector2 direction;
+    private Vector2 _direction;
 
     // jump variables
     private bool isGrounded;
+
+    // propriedade para acessar _direction em outro script
+    public Vector2 direction
+    {
+        get{return _direction;}
+        set{_direction = value;}
+    }
+
+    public bool isRunning
+    {
+        get{return _isJumping;}
+        set{_isJumping = value;}
+    }
+
 
     private void Start()
     {
@@ -46,21 +61,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnInput()
     {
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+        _direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
     }
 
     private void OnMove()
     {
-        rig.velocity = new Vector2(direction.x * speed, rig.velocity.y);
+        rig.velocity = new Vector2(_direction.x * speed, rig.velocity.y);
     }
 
     private void Flip() 
     {
-        if (direction.x > 0)
+        if (_direction.x > 0)
         {
             transform.eulerAngles = new Vector2(0, 0);
         }
-        else if (direction.x < 0)
+        else if (_direction.x < 0)
         {
             transform.eulerAngles = new Vector2(0, 180);
         }
@@ -82,6 +97,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             extraJumps = extraJumpsValue;
+            _isJumping = false; 
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Jump"))
@@ -95,6 +111,7 @@ public class PlayerController : MonoBehaviour
             {
                 rig.velocity = new Vector2(rig.velocity.x, jumpForce);
             }
+            _isJumping = true; 
         }
     }
 
