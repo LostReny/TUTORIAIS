@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float speed;
 
+
     [Header("Jump")]
     public float jumpForce;
     public Transform groundCheck;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
         set{_direction = value;}
     }
 
-    public bool isRunning
+    public bool isJumping
     {
         get{return _isJumping;}
         set{_isJumping = value;}
@@ -86,10 +87,8 @@ public class PlayerController : MonoBehaviour
 #region Jump
 
     private void OnGround()
-    {
-        
+    {   
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
     }
 
     private void JumpInput()

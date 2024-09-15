@@ -4,24 +4,54 @@ using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
 {
-   public PlayerController player;
-   public Animator anim;
+    [Header("States")]
+    public IdleState idleState;
+    public JumpState jumpState;
+    public RunState runState;
 
-   public void Start()
-   {
-        player = GetComponent<PlayerController>();
-        anim = GetComponent<Animator>();
-   }
+    // Referência ao PlayerController
+    private PlayerController playerController;
+    private State currentState;
 
-   public void Update()
-   {
-        if(player.direction.sqrMagnitude > 0)
+    public void Start()
+    {
+        // Inicializando a referência ao PlayerController
+        playerController = GetComponent<PlayerController>();
+        currentState = idleState;
+        currentState.Enter();
+    }
+
+    public void Update()
+    {
+        currentState.Do();
+
+        if (currentState.isComplete)
         {
-            anim.SetInteger("transition",1);
+            ChangeState(GetNextState());
+        }
+    }
+
+    private State GetNextState()
+    {
+        if (playerController.isJumping)
+        {
+            return jumpState;
+        }
+        else if (playerController.direction.sqrMagnitude > 0)
+        {
+            return runState;
         }
         else
         {
-            anim.SetInteger("transition",0);
+            return idleState;
         }
-   }
+    }
+
+    
+    private void ChangeState(State newState)
+    {
+        currentState.Exit();  
+        currentState = newState; 
+        currentState.Enter(); 
+    }
 }
