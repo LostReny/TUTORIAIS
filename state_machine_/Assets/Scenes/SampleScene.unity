@@ -480,6 +480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2028128149}
   anim: {fileID: 2028128150}
+  speed: 6
 --- !u!1 &464585613
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,14 +505,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464585613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0890325, y: -0.054260693, z: -0.7001187}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 924863445}
   - {fileID: 560489654}
   - {fileID: 429121905}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 2028128145}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -868,6 +869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2028128149}
   anim: {fileID: 2028128150}
+  jumpForce: 8
 --- !u!4 &924863445
 Transform:
   m_ObjectHideFlags: 0
@@ -1541,6 +1543,7 @@ Transform:
   m_Children:
   - {fileID: 736067113}
   - {fileID: 1944598332}
+  - {fileID: 464585614}
   m_Father: {fileID: 336598549}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1607,7 +1610,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 500
+  m_Mass: 300
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
@@ -1654,8 +1657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a44d2851702110449d79e3c3759d9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  jumpForce: 8
+  idleState: {fileID: 560489653}
+  jumpState: {fileID: 924863444}
+  runState: {fileID: 429121906}
   groundCheck: {fileID: 1944598332}
   checkRadius: 0.1
   whatIsGround:

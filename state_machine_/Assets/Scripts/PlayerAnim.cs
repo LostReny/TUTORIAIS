@@ -9,13 +9,11 @@ public class PlayerAnim : MonoBehaviour
     public JumpState jumpState;
     public RunState runState;
 
-    // Referência ao PlayerController
     private PlayerController playerController;
     private State currentState;
 
     public void Start()
     {
-        // Inicializando a referência ao PlayerController
         playerController = GetComponent<PlayerController>();
         currentState = idleState;
         currentState.Enter();
@@ -47,7 +45,6 @@ public class PlayerAnim : MonoBehaviour
         }
     }
 
-    
     private void ChangeState(State newState)
     {
         currentState.Exit();  

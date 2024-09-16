@@ -5,25 +5,37 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
-    public float speed;
+    [Header("States")]
+    public IdleState idleState;
+    public JumpState jumpState;
+    public RunState runState;
 
+    private State currentState;
 
     [Header("Jump")]
-    public float jumpForce;
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask whatIsGround;
-    private int extraJumps; 
     public int extraJumpsValue;
-    private bool _isJumping;
 
     // player components
-    private Rigidbody2D rig;
+    private Rigidbody2D _rig;
+    public Rigidbody2D rig 
+    {  
+        get { return _rig; }
+        set { _rig = value; }
+    }
+
     private Vector2 _direction;
 
     // jump variables
-    private bool isGrounded;
+    private bool _isGrounded;
+    public bool isGrounded
+    {
+        get { return _isGrounded; }
+        set { _isGrounded = value; }
+    }
+
 
     // propriedade para acessar _direction em outro script
     public Vector2 direction
@@ -31,7 +43,7 @@ public class PlayerController : MonoBehaviour
         get{return _direction;}
         set{_direction = value;}
     }
-
+    private bool _isJumping;
     public bool isJumping
     {
         get{return _isJumping;}
@@ -41,7 +53,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        extraJumps = extraJumpsValue;
+        currentState = idleState;
+        currentState.Enter();
+        
         rig = GetComponent<Rigidbody2D>();
     }
 
@@ -50,24 +64,52 @@ public class PlayerController : MonoBehaviour
         OnInput();
         Flip();
         JumpInput();
+
+        currentState.Do();
+        currentState.FixedDo();
+
+        if (currentState.isComplete)
+        {
+            ChangeState(GetNextState());
+        }
     }
 
     private void FixedUpdate()
     {
-        OnMove();
         OnGround();
     }
 
-#region Movement
+    #region State
+    private State GetNextState()
+    {
+        if (isJumping)
+        {
+            return jumpState;
+        }
+        else if (direction.sqrMagnitude > 0)
+        {
+            return runState;
+        }
+        else
+        {
+            return idleState;
+        }
+    }
+
+    private void ChangeState(State newState)
+    {
+        currentState.Exit();
+        currentState = newState;
+        currentState.Enter();
+    }
+
+    #endregion
+
+    #region Movement
 
     private void OnInput()
     {
         _direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
-    }
-
-    private void OnMove()
-    {
-        rig.velocity = new Vector2(_direction.x * speed, rig.velocity.y);
     }
 
     private void Flip() 
@@ -82,12 +124,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
-#region Jump
+    #region Jump
 
     private void OnGround()
-    {   
+    {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
     }
 
@@ -95,24 +137,21 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            extraJumps = extraJumpsValue;
-            _isJumping = false; 
+            jumpState.extraJumps = extraJumpsValue;
+            _isJumping = false;
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Jump"))
         {
-            if (extraJumps > 0)
+            if (isGrounded || jumpState.extraJumps > 0)
             {
-                rig.velocity = new Vector2(rig.velocity.x, jumpForce);
-                extraJumps--;
+                rig.velocity = new Vector2(rig.velocity.x, jumpState.jumpForce);
+                _isJumping = true;
+                jumpState.extraJumps--;
             }
-            else if (extraJumps == 0 && isGrounded)
-            {
-                rig.velocity = new Vector2(rig.velocity.x, jumpForce);
-            }
-            _isJumping = true; 
         }
     }
+
 
 #endregion
 
