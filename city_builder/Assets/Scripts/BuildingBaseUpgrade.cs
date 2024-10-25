@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BuildingBaseUpgrade : MonoBehaviour
 {
-    private Player player;
+    public Player player;
 
     private bool _baseUpgrade;
+
+    private Color color;
 
     public bool baseUpgrade
     {
@@ -14,14 +16,22 @@ public class BuildingBaseUpgrade : MonoBehaviour
         set { _baseUpgrade = value; }
     }
 
-    private void Start()
+    private void Update()
     {
-        
+        BaseUpgrade();
     }
 
     public void BaseUpgrade()
     {
         // clicar nos predios - upgrade
-        _baseUpgrade = false;
+        if(player.clicks == 10)
+        {
+            color = Color.red;
+            Debug.Log("Upgrade building");
+        } 
+        else
+        {
+            return;
+        }
     }
 }

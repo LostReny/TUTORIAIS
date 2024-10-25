@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private bool _onClick;
-    private BuildingBaseUpgrade baseBuildUpgrade; 
 
-    public bool onClick
+    private int _clickCounter = 0;
+
+    public int clickCounter
     {
-        get { return _onClick; }
-        set { _onClick = value; }
+        get { return _clickCounter; }
+        set { _clickCounter = value; }
     }
+
+    public int clicks;
 
     public void Update()
     {
@@ -22,17 +24,10 @@ public class Player : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            _onClick = true;
-            //baseBuildUpgrade.baseUpgrade = true;
-            Debug.Log("Upgrade");
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            _onClick = false;
-            //baseBuildUpgrade.baseUpgrade = false;
+            _clickCounter++;
+
+            clicks = _clickCounter;
+            Debug.Log(clicks);
         }
     }
-
-    // clicar nos predios - upgrade 
-
 }
