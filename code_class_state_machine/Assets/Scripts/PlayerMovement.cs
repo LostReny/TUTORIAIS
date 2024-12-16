@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rig;
     public float speed; 
+    public float drag;
 
+    public bool grounded;
+
+    [SerializeField] private Rigidbody2D rig;
+    public BoxCollider2D groundCheck;
 
     private void Update()
     {
@@ -31,6 +35,28 @@ public class PlayerMovement : MonoBehaviour
         //Vector2 direction = new Vector2(xInput,yInput).normalized;
         //rig.velocity = direction * speed * Time.deltaTime;
     }
+
+    #endregion
+
+
+    #region Physics
+
+    private void FixedUpdate()
+    {
+        CheckGround();
+
+        if(grounded)
+        {
+            rig.velocity *= drag;
+        }
+        
+    }
+
+    private void CheckGround()
+    {
+
+    }
+
 
     #endregion
 }
