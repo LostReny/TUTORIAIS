@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
 {
 
     private int _clickCounter = 0;
+    
+    [Header("Clicks")]
+    public int clicks;
 
     public int clickCounter
     {
@@ -13,7 +16,6 @@ public class Player : MonoBehaviour
         set { _clickCounter = value; }
     }
 
-    public int clicks;
 
     public void Update()
     {

@@ -8,7 +8,8 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
     private bool _baseUpgrade;
 
-    private Color color;
+    public GameObject targetObject;
+    private SpriteRenderer spriteRenderer;
 
     public bool baseUpgrade
     {
@@ -16,22 +17,39 @@ public class BuildingBaseUpgrade : MonoBehaviour
         set { _baseUpgrade = value; }
     }
 
+
+     private void Start()
+    {
+        if (targetObject != null)
+        {
+            spriteRenderer = targetObject.GetComponent<SpriteRenderer>();
+        }
+        else
+        {
+            Debug.LogError("Target Object não está definido.");
+        }
+    }
+
     private void Update()
     {
         BaseUpgrade();
     }
 
+
+// transformar essa parte do base upgrade em uma coroutina
+
     public void BaseUpgrade()
     {
-        // clicar nos predios - upgrade
-        if(player.clicks == 10)
+           if (player != null && player.clicks == 10 && !_baseUpgrade)
         {
-            color = Color.red;
-            Debug.Log("Upgrade building");
-        } 
-        else
-        {
-            return;
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = Color.red;
+
+                _baseUpgrade = true;
+                Debug.Log("Upgrade building - cor alterada para vermelho.");
+            }
+            
         }
     }
 }
