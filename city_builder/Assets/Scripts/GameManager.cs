@@ -22,4 +22,6 @@ public class GameManager : MonoBehaviour
         goldText.text = gold.ToString();
         clicksText.text = player.clicks.ToString();
     }
+
+
 }

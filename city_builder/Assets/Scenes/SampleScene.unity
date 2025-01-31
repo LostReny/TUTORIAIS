@@ -1148,7 +1148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 737806363}
+  _clicksForUpgrade: 0
   targetObject: {fileID: 1766458045}
+  upgrades:
+  - clicksToUp: 10
+    upgradeColor: {r: 1, g: 0.76618373, b: 0, a: 1}
+  - clicksToUp: 40
+    upgradeColor: {r: 1, g: 0, b: 0.23491812, a: 1}
 --- !u!1 &1806112245
 GameObject:
   m_ObjectHideFlags: 0
