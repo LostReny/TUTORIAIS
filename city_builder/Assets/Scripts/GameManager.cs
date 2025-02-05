@@ -7,6 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {   
     public Player player;
+    public GoldBase goldBase;
 
     [Header("Gold text")]
     public int gold;
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        goldText.text = gold.ToString();
+        goldText.text = goldBase.goldCounter.ToString();
         clicksText.text = player.clicks.ToString();
     }
 

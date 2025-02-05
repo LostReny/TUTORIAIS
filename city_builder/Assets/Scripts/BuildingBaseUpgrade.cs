@@ -16,11 +16,14 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
     public int _clicksForUpgrade;
 
+    public Collider2D _collider;
+
     public GameObject targetObject;
    [SerializeField] private List<Upgrade> upgrades = new List<Upgrade>();
 
     private Color lastAppliedColor;
     private SpriteRenderer spriteRenderer;
+    private int objectClickCounter = 0;
 
 
     private void Start()
@@ -28,6 +31,7 @@ public class BuildingBaseUpgrade : MonoBehaviour
         if (targetObject != null)
         {
             spriteRenderer = targetObject.GetComponent<SpriteRenderer>();
+            _collider = targetObject.GetComponent<Collider2D>();
         }
         else
         {
@@ -37,54 +41,30 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
     private void Update()
     {
-        BaseUpgrade();
-    }
-
-
-    /*public void BaseUpgrade()
-    {
-        //pego o valor de clique do player e transformo em uma variavel
-        _clicksForUpgrade = player.clicks;
-
-        if (player != null && _clicksForUpgrade == 10 && _clicksForUpgrade < 20)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.color = Color.red;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                //_baseUpgrade = true;
-                Debug.Log("Upgrade building - cor alterada para vermelho.");
+            if (_collider != null && _collider.OverlapPoint(mousePosition))
+            {
+                objectClickCounter++;  // Incrementa apenas quando clica no objeto
+                BaseUpgrade(objectClickCounter);  // Passa o contador específico
             }
         }
-
-        else if (player != null && _clicksForUpgrade == 20 && _clicksForUpgrade < 40)
-        {
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.color = Color.yellow;
-
-                //_baseUpgrade = true;
-                Debug.Log("Upgrade building - cor alterada para amarelo.");
-            }
-        }
-
     }
-    */
-    //
 
-    private void BaseUpgrade()
+    private void BaseUpgrade(int currentClicks)
     {
         if (player == null || spriteRenderer == null) return;
-        
-        _clicksForUpgrade = player.clicks;
 
-        // Verifica qual upgrade aplicar com base nos cliques
+        _clicksForUpgrade = currentClicks;
+
         foreach (Upgrade upgrade in upgrades)
         {
-            if (_clicksForUpgrade >= upgrade.clicksToUp )
+            if (_clicksForUpgrade >= upgrade.clicksToUp)
             {
                 spriteRenderer.color = upgrade.upgradeColor;
-                //Debug.Log($"Upgrade aplicado - Cor alterada para {upgrade.upgradeColor}");
+
             }
         }
     }
