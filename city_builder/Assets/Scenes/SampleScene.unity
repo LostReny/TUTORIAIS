@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 566820191}
   - component: {fileID: 566820190}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GoldManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -889,8 +889,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1766458046}
   - {fileID: 737806364}
+  - {fileID: 1766458046}
   - {fileID: 1439210006}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -937,7 +937,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 583896939}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &928243702
 GameObject:
@@ -1001,8 +1001,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 737806363}
   goldBase: {fileID: 566820190}
+  upgrade: {fileID: 0}
   gold: 0
   goldText: {fileID: 322868446}
+  goldTextToUp: {fileID: 0}
   clicksText: {fileID: 356293588}
 --- !u!4 &999516383
 Transform:
@@ -1096,14 +1098,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 737806363}
+  gold: {fileID: 566820190}
   _clicksForUpgrade: 0
   _collider: {fileID: 1439210008}
   targetObject: {fileID: 1439210005}
   upgrades:
   - clicksToUp: 20
     upgradeColor: {r: 0.41742522, g: 0.13745102, b: 0.6226415, a: 1}
+    goldToUp: 20
+    goldWin: 0
   - clicksToUp: 60
     upgradeColor: {r: 0.10594514, g: 0.9056604, b: 0.7353233, a: 1}
+    goldToUp: 20
+    goldWin: 0
 --- !u!61 &1439210008
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1234,7 +1241,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 583896939}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1766458047
 SpriteRenderer:
@@ -1347,14 +1354,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 737806363}
+  gold: {fileID: 566820190}
   _clicksForUpgrade: 0
   _collider: {fileID: 1766458049}
   targetObject: {fileID: 1766458045}
   upgrades:
   - clicksToUp: 10
     upgradeColor: {r: 1, g: 0.76618373, b: 0, a: 1}
+    goldToUp: 5
+    goldWin: 2
   - clicksToUp: 40
     upgradeColor: {r: 1, g: 0, b: 0.23491812, a: 1}
+    goldToUp: 10
+    goldWin: 3
 --- !u!1 &1806112245
 GameObject:
   m_ObjectHideFlags: 0
