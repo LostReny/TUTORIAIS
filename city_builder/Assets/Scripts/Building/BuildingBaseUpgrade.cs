@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [System.Serializable]
 public class Upgrade
 {
     public int clicksToUp;
     public Color upgradeColor;
+    public Sprite upgradeSprite;
     public int goldToUp;
     public int goldWin;
 }
@@ -18,10 +20,17 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
     public GoldBase gold;
 
+
     public int _clicksForUpgrade;
 
     public Collider2D _collider;
 
+    // pop up txt mostrando o quanto falta de dinheiro
+    [Header("Gold Pop Up")]
+    public GoldPopUp goldPopUp;
+    public TextMeshProUGUI _goldPopUpTxt;
+    
+    
     public GameObject targetObject;
     [SerializeField] private List<Upgrade> upgrades = new List<Upgrade>();
 
@@ -42,6 +51,12 @@ public class BuildingBaseUpgrade : MonoBehaviour
         {
             Debug.LogError("Target Object não está definido.");
         }
+
+
+        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
+        _goldPopUpTxt.text = nextUpgrade.goldToUp.ToString();
+
+
     }
 
     private void Update()
@@ -65,16 +80,20 @@ public class BuildingBaseUpgrade : MonoBehaviour
         _clicksForUpgrade = currentClicks;
 
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex]; // Próximo upgrade na lista
+        _goldPopUpTxt.text = nextUpgrade.goldToUp.ToString();
 
         if (_clicksForUpgrade >= nextUpgrade.clicksToUp && gold.goldCounter >= nextUpgrade.goldToUp)
         {
-            gold.goldCounter -= nextUpgrade.goldToUp; // Reduz o ouro apenas para o próximo upgrade
+            gold.goldCounter -= nextUpgrade.goldToUp;
+            //goldPopUp.GetComponent<TextMeshProUGUI>().text = nextUpgrade.goldToUp.ToString();
             spriteRenderer.color = nextUpgrade.upgradeColor;
-            gold.goldCounter += nextUpgrade.goldWin; // Aplica a cor do upgrade
+            spriteRenderer.sprite = nextUpgrade.upgradeSprite;
+            gold.goldCounter += nextUpgrade.goldWin; 
             currentUpgradeIndex++; // Avança para o próximo nível de upgrade
             Debug.Log($"Upgrade realizado! Novo nível: {currentUpgradeIndex}, Ouro restante: {gold.goldCounter}");
         }
     }
+
 
 }
 
