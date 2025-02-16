@@ -52,9 +52,7 @@ public class BuildingBaseUpgrade : MonoBehaviour
             Debug.LogError("Target Object não está definido.");
         }
 
-
-        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
-        _goldPopUpTxt.text = nextUpgrade.goldToUp.ToString();
+        PopUpUpdate();
 
 
     }
@@ -79,19 +77,39 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
         _clicksForUpgrade = currentClicks;
 
-        Upgrade nextUpgrade = upgrades[currentUpgradeIndex]; // Próximo upgrade na lista
-        _goldPopUpTxt.text = nextUpgrade.goldToUp.ToString();
+        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
+        
 
         if (_clicksForUpgrade >= nextUpgrade.clicksToUp && gold.goldCounter >= nextUpgrade.goldToUp)
         {
             gold.goldCounter -= nextUpgrade.goldToUp;
-            //goldPopUp.GetComponent<TextMeshProUGUI>().text = nextUpgrade.goldToUp.ToString();
+            
             spriteRenderer.color = nextUpgrade.upgradeColor;
             spriteRenderer.sprite = nextUpgrade.upgradeSprite;
-            gold.goldCounter += nextUpgrade.goldWin; 
-            currentUpgradeIndex++; // Avança para o próximo nível de upgrade
-            Debug.Log($"Upgrade realizado! Novo nível: {currentUpgradeIndex}, Ouro restante: {gold.goldCounter}");
+            gold.goldCounter += nextUpgrade.goldWin;
+
+
+            currentUpgradeIndex++;
+            PopUpUpdate();
+
+
         }
+    }
+
+
+    private void PopUpUpdate()
+    {
+        if(currentUpgradeIndex < upgrades.Count)
+        {
+            _goldPopUpTxt.text = upgrades[currentUpgradeIndex].goldToUp.ToString();
+        }
+        else
+        {
+            _goldPopUpTxt.text = "";
+        }
+
+
+
     }
 
 
