@@ -9,18 +9,18 @@ public class GoldPopUp : MonoBehaviour
 
     private void Start()
     {
-        //TxtPopUp();
+        TxtPopUp();
     }
 
-    /*private void TxtPopUp()
+    private void TxtPopUp()
     {
-        Canvas uiCanvasOne = GameObject.Find("UICanvas1").GetComponent<Canvas>();
-        Canvas uiCanvasTwo = GameObject.Find("UICanvas2").GetComponent<Canvas>();
+        //Canvas uiCanvasOne = GameObject.Find("UICanvas1").GetComponent<Canvas>();
+        //Canvas uiCanvasTwo = GameObject.Find("UICanvas2").GetComponent<Canvas>();
 
         GoldPopUp goldPopUp = FindObjectOfType<GoldPopUp>();
-        goldPopUp.PopUpText(uiCanvasOne);
-        goldPopUp.PopUpText(uiCanvasTwo);
-    }*/
+        //goldPopUp.PopUpText(uiCanvasOne);
+        //goldPopUp.PopUpText(uiCanvasTwo);
+    }
 
 
     private void PopUpText(Canvas parentCanvas)

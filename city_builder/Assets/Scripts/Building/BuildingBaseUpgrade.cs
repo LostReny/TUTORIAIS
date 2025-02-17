@@ -24,11 +24,6 @@ public class BuildingBaseUpgrade : MonoBehaviour
     public int _clicksForUpgrade;
 
     public Collider2D _collider;
-
-    // pop up txt mostrando o quanto falta de dinheiro
-    [Header("Gold Pop Up")]
-    public GoldPopUp goldPopUp;
-    public TextMeshProUGUI _goldPopUpTxt;
     
     
     public GameObject targetObject;
@@ -51,9 +46,6 @@ public class BuildingBaseUpgrade : MonoBehaviour
         {
             Debug.LogError("Target Object não está definido.");
         }
-
-        PopUpUpdate();
-
 
     }
 
@@ -90,26 +82,8 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
 
             currentUpgradeIndex++;
-            PopUpUpdate();
-
-
+  
         }
-    }
-
-
-    private void PopUpUpdate()
-    {
-        if(currentUpgradeIndex < upgrades.Count)
-        {
-            _goldPopUpTxt.text = upgrades[currentUpgradeIndex].goldToUp.ToString();
-        }
-        else
-        {
-            _goldPopUpTxt.text = "";
-        }
-
-
-
     }
 
 

@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
             _clickCounter++;
 
             clicks = _clickCounter;
-            //Debug.Log(clicks);
         }
     }
 }
