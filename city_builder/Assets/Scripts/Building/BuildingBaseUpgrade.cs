@@ -25,6 +25,9 @@ public class BuildingBaseUpgrade : MonoBehaviour
     public GameObject targetObject;
     
     public int objectClickCounter = 0;
+
+    public int valueToUp;
+    public TextMeshProUGUI txtValueToUp;
     
     [SerializeField] private List<Upgrade> upgrades = new List<Upgrade>();
 
@@ -55,6 +58,8 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
         objectClickCounter = currentClicks;
         
+        ValueGoldToUp();
+        
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
         if (objectClickCounter >= nextUpgrade.clicksToUp && gold.goldCounter >= nextUpgrade.goldToUp)
@@ -66,8 +71,27 @@ public class BuildingBaseUpgrade : MonoBehaviour
             gold.goldCounter += nextUpgrade.goldWin;
 
             currentUpgradeIndex++;
-  
+            
         }
+    }
+
+    //transformar em uma barra
+
+    private void ValueGoldToUp()
+    {
+        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
+
+        valueToUp = nextUpgrade.clicksToUp - objectClickCounter;
+
+        if(valueToUp <= 5 && valueToUp > 0 )
+        {
+            txtValueToUp.text = valueToUp.ToString();
+        }
+        else 
+        {
+            txtValueToUp.text = "";
+        }
+        
     }
 }
 
