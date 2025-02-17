@@ -20,18 +20,16 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
     public GoldBase gold;
 
-
-    public int _clicksForUpgrade;
-
     public Collider2D _collider;
     
-    
     public GameObject targetObject;
+    
+    public int objectClickCounter = 0;
+    
     [SerializeField] private List<Upgrade> upgrades = new List<Upgrade>();
 
     private Color lastAppliedColor;
     private SpriteRenderer spriteRenderer;
-    private int objectClickCounter = 0;
     private int currentUpgradeIndex = 0;
 
 
@@ -46,33 +44,20 @@ public class BuildingBaseUpgrade : MonoBehaviour
         {
             Debug.LogError("Target Object não está definido.");
         }
+        
 
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (_collider != null && _collider.OverlapPoint(mousePosition))
-            {
-                objectClickCounter++;  // Incrementa apenas quando clica no objeto
-                BaseUpgrade(objectClickCounter);  // Passa o contador específico
-            }
-        }
-    }
-
-    private void BaseUpgrade(int currentClicks)
+    public void BaseUpgrade(int currentClicks)
     {
         if (player == null || spriteRenderer == null || gold == null || currentUpgradeIndex >= upgrades.Count) return;
 
-        _clicksForUpgrade = currentClicks;
-
-        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
+        objectClickCounter = currentClicks;
         
+        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
-        if (_clicksForUpgrade >= nextUpgrade.clicksToUp && gold.goldCounter >= nextUpgrade.goldToUp)
+        if (objectClickCounter >= nextUpgrade.clicksToUp && gold.goldCounter >= nextUpgrade.goldToUp)
         {
             gold.goldCounter -= nextUpgrade.goldToUp;
             
@@ -80,12 +65,9 @@ public class BuildingBaseUpgrade : MonoBehaviour
             spriteRenderer.sprite = nextUpgrade.upgradeSprite;
             gold.goldCounter += nextUpgrade.goldWin;
 
-
             currentUpgradeIndex++;
   
         }
     }
-
-
 }
 
