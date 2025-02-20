@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 [System.Serializable]
 public class Upgrade
@@ -26,8 +28,12 @@ public class BuildingBaseUpgrade : MonoBehaviour
     
     public int objectClickCounter = 0;
 
+    [Header("UI Upgrade to Update")]
     public int valueToUp;
     public TextMeshProUGUI txtValueToUp;
+
+    [Header("Slider")]
+    public Slider slider; 
     
     [SerializeField] private List<Upgrade> upgrades = new List<Upgrade>();
 
@@ -48,7 +54,10 @@ public class BuildingBaseUpgrade : MonoBehaviour
             Debug.LogError("Target Object não está definido.");
         }
         
-
+        if(upgrades.Count > 0)
+        {
+            SetValuesToUp();
+        }
     }
 
 
@@ -57,9 +66,10 @@ public class BuildingBaseUpgrade : MonoBehaviour
         if (player == null || spriteRenderer == null || gold == null || currentUpgradeIndex >= upgrades.Count) return;
 
         objectClickCounter = currentClicks;
-        
-        ValueGoldToUp();
-        
+
+        SliderValueToUp();
+        MaxValue();
+
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
         if (objectClickCounter >= nextUpgrade.clicksToUp && gold.goldCounter >= nextUpgrade.goldToUp)
@@ -72,10 +82,47 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
             currentUpgradeIndex++;
             
+            SetValuesToUp();
         }
     }
 
-    //transformar em uma barra
+    private void SetValuesToUp()
+    {
+        if (currentUpgradeIndex >= upgrades.Count) return;
+        
+        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
+        slider.maxValue = nextUpgrade.clicksToUp - objectClickCounter;
+        slider.minValue = objectClickCounter;
+        slider.value = nextUpgrade.clicksToUp;
+
+    }
+
+    private void SliderValueToUp()
+    {
+        if (currentUpgradeIndex >= upgrades.Count) return;
+
+        Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
+
+        valueToUp = nextUpgrade.clicksToUp - objectClickCounter;
+
+        slider.value = valueToUp;
+    }
+
+    private void MaxValue()
+    {
+        // PS : ta errado
+        //se a lista de upgrade chegar no final
+        if(currentUpgradeIndex >= upgrades.Count)
+        {
+            Debug.Log("MaxUp");
+            //txtValueToUp.text = "MAX UPGRADE";
+        }
+
+        //mostrar texto de MAX UPGRADE
+    }
+
+    // criar texto que mostra e atualiza - mostrando o quanto de ouro precisa 
+    // texto estatico
 
     private void ValueGoldToUp()
     {
