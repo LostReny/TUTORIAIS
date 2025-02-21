@@ -56,6 +56,7 @@ public class BuildingBaseUpgrade : MonoBehaviour
         
         if(upgrades.Count > 0)
         {
+            ValueGoldToUp();
             SetValuesToUp();
         }
     }
@@ -67,8 +68,8 @@ public class BuildingBaseUpgrade : MonoBehaviour
 
         objectClickCounter = currentClicks;
 
+        ValueGoldToUp();
         SliderValueToUp();
-        MaxValue();
 
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
@@ -91,9 +92,10 @@ public class BuildingBaseUpgrade : MonoBehaviour
         if (currentUpgradeIndex >= upgrades.Count) return;
         
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
-        slider.maxValue = nextUpgrade.clicksToUp - objectClickCounter;
+
+        slider.maxValue = nextUpgrade.clicksToUp;
         slider.minValue = objectClickCounter;
-        slider.value = nextUpgrade.clicksToUp;
+        slider.value = slider.maxValue;
 
     }
 
@@ -108,35 +110,20 @@ public class BuildingBaseUpgrade : MonoBehaviour
         slider.value = valueToUp;
     }
 
-    private void MaxValue()
-    {
-        // PS : ta errado
-        //se a lista de upgrade chegar no final
-        if(currentUpgradeIndex >= upgrades.Count)
-        {
-            Debug.Log("MaxUp");
-            //txtValueToUp.text = "MAX UPGRADE";
-        }
 
-        //mostrar texto de MAX UPGRADE
-    }
-
-    // criar texto que mostra e atualiza - mostrando o quanto de ouro precisa 
-    // texto estatico
+    // quando chegar no numero max de upgrade - colocar maximo de upgrade
 
     private void ValueGoldToUp()
     {
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
-        valueToUp = nextUpgrade.clicksToUp - objectClickCounter;
+        valueToUp = nextUpgrade.goldToUp;
 
-        if(valueToUp <= 5 && valueToUp > 0 )
+        txtValueToUp.text = "Gold:" + valueToUp.ToString();
+        
+        if (currentUpgradeIndex >= upgrades.Count) 
         {
-            txtValueToUp.text = valueToUp.ToString();
-        }
-        else 
-        {
-            txtValueToUp.text = "";
+            txtValueToUp.text = "MAX UP";
         }
         
     }
