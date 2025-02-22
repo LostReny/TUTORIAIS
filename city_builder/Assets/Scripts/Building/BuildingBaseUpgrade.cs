@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 [System.Serializable]
 public class Upgrade
@@ -49,16 +49,13 @@ public class BuildingBaseUpgrade : MonoBehaviour
             spriteRenderer = targetObject.GetComponent<SpriteRenderer>();
             _collider = targetObject.GetComponent<Collider2D>();
         }
-        else
-        {
-            Debug.LogError("Target Object não está definido.");
-        }
         
-        if(upgrades.Count > 0)
-        {
-            ValueGoldToUp();
-            SetValuesToUp();
-        }
+
+        ValueGoldToUp();
+        SetValuesToUp();
+
+        slider.gameObject.SetActive(true);
+
     }
 
 
@@ -93,8 +90,7 @@ public class BuildingBaseUpgrade : MonoBehaviour
         
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
-        slider.maxValue = nextUpgrade.clicksToUp;
-        slider.minValue = objectClickCounter;
+        slider.maxValue = nextUpgrade.clicksToUp - objectClickCounter;
         slider.value = slider.maxValue;
 
     }
@@ -111,21 +107,28 @@ public class BuildingBaseUpgrade : MonoBehaviour
     }
 
 
-    // quando chegar no numero max de upgrade - colocar maximo de upgrade
 
     private void ValueGoldToUp()
     {
+        // ultimo valor da lista
+        int lastUpgrade = upgrades.Count - 1;
+
+        if (currentUpgradeIndex >= lastUpgrade)
+        {
+            txtValueToUp.text = "MAX UP";
+            slider.gameObject.SetActive(false);
+            
+            return;
+        }
+
+
+        // lista e valor de ouro
         Upgrade nextUpgrade = upgrades[currentUpgradeIndex];
 
         valueToUp = nextUpgrade.goldToUp;
 
         txtValueToUp.text = "Gold:" + valueToUp.ToString();
-        
-        if (currentUpgradeIndex >= upgrades.Count) 
-        {
-            txtValueToUp.text = "MAX UP";
-        }
-        
+  
     }
 }
 

@@ -2290,6 +2290,11 @@ MonoBehaviour:
     upgradeSprite: {fileID: -9095717837082945937, guid: 34587324d412940a79d530020c957dc0, type: 3}
     goldToUp: 20
     goldWin: 15
+  - clicksToUp: 0
+    upgradeColor: {r: 0.10594514, g: 0.9056604, b: 0.7353233, a: 1}
+    upgradeSprite: {fileID: -9095717837082945937, guid: 34587324d412940a79d530020c957dc0, type: 3}
+    goldToUp: 0
+    goldWin: 0
 --- !u!61 &1439210008
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2627,6 +2632,11 @@ MonoBehaviour:
     upgradeSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
     goldToUp: 10
     goldWin: 3
+  - clicksToUp: 0
+    upgradeColor: {r: 1, g: 0, b: 0.23491812, a: 1}
+    upgradeSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+    goldToUp: 0
+    goldWin: 0
 --- !u!1 &1806112245
 GameObject:
   m_ObjectHideFlags: 0
